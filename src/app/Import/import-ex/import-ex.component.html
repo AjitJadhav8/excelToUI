@@ -1,0 +1,33 @@
+<div class="container my-5">
+    <div class="upload-section">
+      <label for="fileInput">Upload Excel File</label><br>
+      <input
+        type="file" id="fileInput" (change)="csvImport($event)"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple
+        class="form-control-file"
+      >
+    </div>
+    
+    <div *ngIf="files.length > 0" class="file-select-section">
+      <label for="fileSelect">Select File:</label>
+      <select id="fileSelect" (change)="onFileSelect($event)" class="form-control">
+        <option *ngFor="let file of files" [value]="file.name">{{ file.name }}</option>
+      </select>
+    </div>
+    
+    <div *ngIf="selectedData.length > 0" class="table-section">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th *ngFor="let header of getHeaders()">{{ header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of selectedData">
+            <td *ngFor="let header of getHeaders()">{{ row[header] }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

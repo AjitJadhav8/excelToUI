@@ -1,0 +1,55 @@
+/* General Styles */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.upload-section, .file-select-section, .table-section {
+    margin-bottom: 20px;
+}
+
+.upload-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.file-select-section label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.table {
+    background-color: #ffffff; /* White background for the table */
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #343a40; /* Dark background for table headers */
+    color: #ffffff; /* White text color */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #e9ecef; /* Light gray background for odd rows */
+}
+
+.table td, .table th {
+    padding: 12px;
+    text-align: center;
+}
+
+.table-section {
+    overflow-x: auto; /* Ensures the table is scrollable on small screens */
+}
+
+/* Input and Select Styles */
+.form-control-file, .form-control {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+}
