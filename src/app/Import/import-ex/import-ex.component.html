@@ -1,33 +1,67 @@
 <div class="container my-5">
+  <!-- Toolbar for File Selection, Search, and Sorting -->
+  <div class="toolbar">
+    <!-- File Upload Section -->
     <div class="upload-section">
-      <label for="fileInput">Upload Excel File</label><br>
+      <label for="fileInput">Upload File:</label>
       <input
-        type="file" id="fileInput" (change)="csvImport($event)"
-        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple
+        type="file" 
+        id="fileInput" 
+        (change)="csvImport($event)"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+        multiple
         class="form-control-file"
       >
     </div>
-    
-    <div *ngIf="files.length > 0" class="file-select-section">
+
+    <!-- File Selection Dropdown -->
+    <div class="file-select-section">
       <label for="fileSelect">Select File:</label>
       <select id="fileSelect" (change)="onFileSelect($event)" class="form-control">
         <option *ngFor="let file of files" [value]="file.name">{{ file.name }}</option>
       </select>
     </div>
-    
-    <div *ngIf="selectedData.length > 0" class="table-section">
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th *ngFor="let header of getHeaders()">{{ header }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let row of selectedData">
-            <td *ngFor="let header of getHeaders()">{{ row[header] }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- Search Input Field -->
+ 
+
+    <!-- Sorting Options -->
+    <div class="sorting-options">
+      <label for="sortColumn">Sort Column:</label>
+      <select id="sortColumn" (change)="onSortColumnChange($event)" class="form-control">
+        <option *ngFor="let header of getHeaders()" [value]="header">{{ header }}</option>
+      </select>
+
+      <label for="sortDirection">Sort Direction:</label>
+      <select id="sortDirection" (change)="onSortDirectionChange($event)" class="form-control">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
     </div>
+    <div class="search-section">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          placeholder="Search..." 
+          class="form-control"
+        >
+      </div>
   </div>
-  
+
+  <!-- Table with Sorting Functionality -->
+  <div *ngIf="selectedData.length > 0" class="table-section">
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th *ngFor="let header of getHeaders()">{{ header }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Display filtered and sorted data -->
+        <tr *ngFor="let row of filteredData">
+          <td *ngFor="let header of getHeaders()">{{ row[header] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
