@@ -1,0 +1,18 @@
+1. Clone the repository or download the ZIP file.
+
+2. Extract the ZIP file (if applicable).
+                         
+3. Open the project folder in Visual Studio Code.
+                         
+4. Open the integrated terminal in VS Code.
+
+5. Install the dependencies:
+  npm install -g @angular/cli
+
+6. Install Project Dependencies:
+ npm install
+                         
+7.Serve the Application:
+ng serve
+                         
+8. Copy URL and Paste in Browser:
