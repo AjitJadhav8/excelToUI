@@ -105,4 +105,28 @@ export class ImportExComponent {
   onSortDirectionChange(event: any): void {
     this.sortDirection = event.target.value as 'asc' | 'desc';
   }
-}
+
+  //export
+  exportToExcel(): void {
+    if (this.selectedFile && this.selectedFile.data) { // Check if there's a selected file and data
+
+      const wb: XLSX.WorkBook = XLSX.utils.book_new(); //type = workbook, create new empty workbook
+  
+      // Iterate through each sheet in the selected file
+      for (const sheetName of this.selectedFile.sheets) {
+        // Create a worksheet from the selected data
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.selectedFile.data[sheetName]); //converts js array to sheet
+        //XLSX.utils.book_append_sheet(workbook, worksheet, sheetName): 
+        XLSX.utils.book_append_sheet(wb, ws, sheetName); // Add the worksheet to the workbook
+      }
+  
+      // Write the workbook to a file
+      // XLSX.writeFile(workbook, filename): Save the workbook as an Excel file
+      XLSX.writeFile(wb, `${this.selectedFile?.name || 'export'}.xlsx`); // Use file name or default to 'export'
+    } else {
+      alert('No data available to export!');
+    }
+  }
+}  
+
+
