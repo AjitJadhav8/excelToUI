@@ -1,20 +1,18 @@
 <div class="container my-5">
   <!-- Toolbar for File Selection, Search, and Sorting -->
   <div class="toolbar">
-    <!-- File Upload Section -->
     <div class="upload-section">
       <label for="fileInput">Upload File:</label>
       <input
-        type="file" 
-        id="fileInput" 
+        type="file"
+        id="fileInput"
         (change)="csvImport($event)"
-        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" 
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
         multiple
         class="form-control-file"
       >
     </div>
 
-    <!-- File Selection Dropdown -->
     <div class="file-select-section">
       <label for="fileSelect">Select File:</label>
       <select id="fileSelect" (change)="onFileSelect($event)" class="form-control">
@@ -22,8 +20,13 @@
       </select>
     </div>
 
-    <!-- Search Input Field -->
- 
+    <!-- Sheet Selection Dropdown -->
+    <div class="sheet-select-section">
+      <label for="sheetSelect">Select Sheet:</label>
+      <select id="sheetSelect" (change)="onSheetSelect($event)" class="form-control">
+        <option *ngFor="let sheet of selectedFile?.sheets" [value]="sheet">{{ sheet }}</option>
+      </select>
+    </div>
 
     <!-- Sorting Options -->
     <div class="sorting-options">
@@ -38,14 +41,16 @@
         <option value="desc">Descending</option>
       </select>
     </div>
+
+    <!-- Search Input Field -->
     <div class="search-section">
-        <input 
-          type="text" 
-          [(ngModel)]="searchTerm" 
-          placeholder="Search..." 
-          class="form-control"
-        >
-      </div>
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Search..." 
+        class="form-control"
+      >
+    </div>
   </div>
 
   <!-- Table with Sorting Functionality -->
@@ -57,7 +62,6 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Display filtered and sorted data -->
         <tr *ngFor="let row of filteredData">
           <td *ngFor="let header of getHeaders()">{{ row[header] }}</td>
         </tr>
