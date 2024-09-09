@@ -1,4 +1,3 @@
-
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -75,7 +74,6 @@ export class ImportExComponent {
   }
 
   // Filter and sort data based on search term and sort preferences
-  // This getter applies filtering and sorting to the selectedData based on the search term, selected column, and sort direction.
   get filteredData(): any[] {
     const searchTermLower = this.searchTerm.toLowerCase();
     return this.selectedData
@@ -96,37 +94,40 @@ export class ImportExComponent {
       });
   }
 
-  // Update the sort column based on user selection
   onSortColumnChange(event: any): void {
     this.sortColumn = event.target.value;
   }
 
-  // Update the sort direction based on user selection
   onSortDirectionChange(event: any): void {
     this.sortDirection = event.target.value as 'asc' | 'desc';
   }
 
-  //export
+  // Handle cell edits rowIndex, Header for column 
+  onCellEdit(rowIndex: number, header: string, event: Event): void {
+    const inputElement = event.target as HTMLInputElement; // extract the new value entered by the user. event.target to an HTMLInputElement
+    if (this.selectedData[rowIndex]) {
+      this.selectedData[rowIndex][header] = inputElement.value;
+    }
+  }
+  
+  
+
   exportToExcel(): void {
     if (this.selectedFile && this.selectedFile.data) { // Check if there's a selected file and data
 
-      const wb: XLSX.WorkBook = XLSX.utils.book_new(); //type = workbook, create new empty workbook
+      const wb: XLSX.WorkBook = XLSX.utils.book_new(); // Create a new empty workbook
   
       // Iterate through each sheet in the selected file
       for (const sheetName of this.selectedFile.sheets) {
         // Create a worksheet from the selected data
-        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.selectedFile.data[sheetName]); //converts js array to sheet
-        //XLSX.utils.book_append_sheet(workbook, worksheet, sheetName): 
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.selectedFile.data[sheetName]); // Convert JS array to sheet
         XLSX.utils.book_append_sheet(wb, ws, sheetName); // Add the worksheet to the workbook
       }
   
       // Write the workbook to a file
-      // XLSX.writeFile(workbook, filename): Save the workbook as an Excel file
-      XLSX.writeFile(wb, `${this.selectedFile?.name || 'export'}.xlsx`); // Use file name or default to 'export'
+      XLSX.writeFile(wb, `${this.selectedFile?.name || 'export'}.xlsx`); // Save the workbook as an Excel file
     } else {
       alert('No data available to export!');
     }
   }
-}  
-
-
+}

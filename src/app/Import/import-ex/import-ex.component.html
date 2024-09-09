@@ -1,3 +1,4 @@
+<!-- Table with user interaction And Export Functionality -->
 <div class="container my-5">
   <!-- Toolbar for File Selection, Search, and Sorting -->
   <div class="toolbar">
@@ -20,7 +21,6 @@
       </select>
     </div>
 
-    <!-- Sheet Selection Dropdown -->
     <div class="sheet-select-section">
       <label for="sheetSelect">Select Sheet:</label>
       <select id="sheetSelect" (change)="onSheetSelect($event)" class="form-control">
@@ -28,7 +28,6 @@
       </select>
     </div>
 
-    <!-- Sorting Options -->
     <div class="sorting-options">
       <label for="sortColumn">Sort Column:</label>
       <select id="sortColumn" (change)="onSortColumnChange($event)" class="form-control">
@@ -42,7 +41,6 @@
       </select>
     </div>
 
-    <!-- Search Input Field -->
     <div class="search-section">
       <input 
         type="text" 
@@ -52,17 +50,12 @@
       >
     </div>
 
-    <!-- Toolbar for File Selection, Search, Sorting, and Export -->
-    <!-- Other sections like upload, file selection, etc. -->
-    <!-- Export to Excel Button -->
     <div class="export-section">
-    <button (click)="exportToExcel()" class="btn btn-primary">Export to Excel</button>
-    
-</div>
-
+      <button (click)="exportToExcel()" class="btn btn-primary">Export to Excel</button>
+    </div>
   </div>
 
-  <!-- Table with Sorting Functionality -->
+  <!-- Table with Sorting Functionality And User Input With type text --> 
   <div *ngIf="selectedData.length > 0" class="table-section">
     <table class="table table-bordered table-striped">
       <thead>
@@ -71,8 +64,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let row of filteredData">
-          <td *ngFor="let header of getHeaders()">{{ row[header] }}</td>
+        <tr *ngFor="let row of filteredData; let rowIndex = index">
+          <td *ngFor="let header of getHeaders()">
+            <input type="text"  [value]="row[header] || ''"  (input)="onCellEdit(rowIndex, header, $event)"  class="form-control"> 
+            <!-- When the user types, the input event is triggered.The onCellEdit(rowIndex, header, event) method is called. -->
+          </td>
         </tr>
       </tbody>
     </table>
